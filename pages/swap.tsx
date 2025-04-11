@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../styles/Swap.module.css';
 
+// Define the shape of a coin
+interface Coin {
+  name: string;
+  symbol: string;
+}
+
 const Swap = () => {
-  const [coin1, setCoin1] = useState('');
-  const [coin2, setCoin2] = useState('');
-  const [amount, setAmount] = useState('');
-  const [coins, setCoins] = useState([]);
+  const [coin1, setCoin1] = useState<string>('');
+  const [coin2, setCoin2] = useState<string>('');
+  const [amount, setAmount] = useState<string>('');
+  const [coins, setCoins] = useState<Coin[]>([]);  // Define the type for the coins state
 
   useEffect(() => {
     // Fetch available coins from your API or local data
