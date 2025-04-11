@@ -1,0 +1,6 @@
+-e node_modules
+.next
+*.log
+.DS_Store
+.env
+.temp
