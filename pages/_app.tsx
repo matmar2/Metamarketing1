@@ -1,17 +1,8 @@
+import '../styles/globals.css';  // Make sure this import is already there
+import '../styles/Swap.module.css'; // Import Swap styles here
 
-import { ChakraProvider } from "@chakra-ui/react";
-import type { AppProps } from "next/app";
-import { useEffect } from "react";
-import initWallets from "../utils/walletInit";
-
-export default function App({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    initWallets();
-  }, []);
-
-  return (
-    <ChakraProvider>
-      <Component {...pageProps} />
-    </ChakraProvider>
-  );
+function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
 }
+
+export default MyApp;

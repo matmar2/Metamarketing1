@@ -11,11 +11,13 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@solana/web3.js": "^1.76.0",
+    "axios": "^1.8.4",
     "ethers": "^6.6.4",
     "framer-motion": "^10.16.3",
     "next": "^15.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-select": "^5.10.1",
     "swr": "^2.2.0",
     "tronweb": "^6.0.2"
   },

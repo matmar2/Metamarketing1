@@ -1,83 +1,76 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import styles from '../styles/Swap.module.css';
 
-import {
-  Box,
-  Heading,
-  Select,
-  NumberInput,
-  NumberInputField,
-  Button,
-  Text,
-  VStack,
-  HStack,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-
-const coinIds = [
-  "bitcoin",
-  "ethereum",
-  "solana",
-  "tron",
-  "tether",
-  "binancecoin",
-  "polygon",
-  "dogecoin",
-  "cardano",
-  "litecoin",
-];
-
-export default function Swap() {
-  const [prices, setPrices] = useState<any>({});
-  const [fromCoin, setFromCoin] = useState("bitcoin");
-  const [toCoin, setToCoin] = useState("ethereum");
-  const [amount, setAmount] = useState(1);
-  const [result, setResult] = useState("");
+const Swap = () => {
+  const [coin1, setCoin1] = useState('');
+  const [coin2, setCoin2] = useState('');
+  const [amount, setAmount] = useState('');
+  const [coins, setCoins] = useState([]);
 
   useEffect(() => {
-    fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds.join(
-        ","
-      )}&vs_currencies=usd`
-    )
-      .then((res) => res.json())
-      .then((data) => setPrices(data));
+    // Fetch available coins from your API or local data
+    axios.get('/api/coins')  // Replace with the actual API URL
+      .then(response => {
+        setCoins(response.data); // Assuming response.data contains a list of coins
+      })
+      .catch(error => {
+        console.error('Error fetching coins:', error);
+      });
   }, []);
 
   const handleSwap = () => {
-    if (!prices[fromCoin] || !prices[toCoin]) return;
-    const fromPrice = prices[fromCoin].usd;
-    const toPrice = prices[toCoin].usd;
-    const toAmount = ((fromPrice / toPrice) * amount).toFixed(6);
-    setResult(`${amount} ${fromCoin} ≈ ${toAmount} ${toCoin}`);
+    // Implement the swap functionality here
+    console.log(`Swapping ${amount} of ${coin1} to ${coin2}`);
   };
 
   return (
-    <Box p={8}>
-      <Heading mb={6}>Simulated Coin Swap</Heading>
-      <VStack spacing={4} align="stretch">
-        <HStack>
-          <Select value={fromCoin} onChange={(e) => setFromCoin(e.target.value)}>
-            {coinIds.map((coin) => (
-              <option key={coin} value={coin}>
-                {coin}
-              </option>
-            ))}
-          </Select>
-          <NumberInput value={amount} onChange={(v) => setAmount(Number(v))}>
-            <NumberInputField />
-          </NumberInput>
-        </HStack>
-        <Select value={toCoin} onChange={(e) => setToCoin(e.target.value)}>
-          {coinIds.map((coin) => (
-            <option key={coin} value={coin}>
-              {coin}
+    <div className={styles.swapContainer}>
+      <h2 className={styles.swapHeader}>Coin Swap</h2>
+      <div className={styles.inputContainer}>
+        <label htmlFor="coin1">Select Coin 1</label>
+        <select
+          id="coin1"
+          value={coin1}
+          onChange={(e) => setCoin1(e.target.value)}
+        >
+          <option value="">Select Coin</option>
+          {coins.map((coin) => (
+            <option key={coin.symbol} value={coin.symbol}>
+              {coin.name} ({coin.symbol})
             </option>
           ))}
-        </Select>
-        <Button colorScheme="blue" onClick={handleSwap}>
-          Swap
-        </Button>
-        {result && <Text mt={4}>{result}</Text>}
-      </VStack>
-    </Box>
+        </select>
+      </div>
+      <div className={styles.inputContainer}>
+        <label htmlFor="coin2">Select Coin 2</label>
+        <select
+          id="coin2"
+          value={coin2}
+          onChange={(e) => setCoin2(e.target.value)}
+        >
+          <option value="">Select Coin</option>
+          {coins.map((coin) => (
+            <option key={coin.symbol} value={coin.symbol}>
+              {coin.name} ({coin.symbol})
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className={styles.inputContainer}>
+        <label htmlFor="amount">Amount</label>
+        <input
+          type="number"
+          id="amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+      </div>
+      <button className={styles.button} onClick={handleSwap}>
+        Swap
+      </button>
+    </div>
   );
-}
+};
+
+export default Swap;
