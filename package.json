@@ -10,7 +10,7 @@
     "@chakra-ui/react": "^2.7.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@solana/web3.js": "^1.76.0",
+    "@solana/web3.js": "^1.43.0",
     "axios": "^1.8.4",
     "ethers": "^6.6.4",
     "framer-motion": "^10.16.3",

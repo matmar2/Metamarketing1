@@ -29,25 +29,18 @@ const WalletCheckButton = () => {
   const checkTronLink = async () => {
     if (window.tronLink) {
       try {
-        // Request the account address from TronLink
         const address = await window.tronLink.request({
           method: 'tron_requestAccounts',
         });
-
-        if (address && address.length > 0) {
-          console.log('TronLink address:', address[0]);
-          return address[0];  // Return the address if found
-        } else {
-          console.log("No TronLink address found.");
-          return null;
-        }
+        console.log('TronLink address:', address[0]);
+        return address[0];
       } catch (error) {
         console.error("Error with TronLink:", error);
-        return null;  // Return null if there's an error
+        return null;
       }
     } else {
       console.log("TronLink not available");
-      return null;  // Return null if TronLink is not installed
+      return null;
     }
   };
 
